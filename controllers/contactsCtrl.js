@@ -52,7 +52,7 @@ export const getSingleContactCtrl = asyncHandler(async (req, res) => {
 
 export const updateContactCtrl = asyncHandler(async(req, res)=> {
     const {firstName, lastName, email, company, linkedIn, phone, occupation} = req?.body; 
-    const contact = Contacts.findByIdAndUpdate(
+    const contact = await Contacts.findByIdAndUpdate(
         req.params.id,
         {
             firstName, lastName, email, company, linkedIn, phone, occupation
@@ -60,11 +60,19 @@ export const updateContactCtrl = asyncHandler(async(req, res)=> {
         },
         {
             new: true,
+            runValidators: true
         },
-    ).exec()
+    )
+    if (!contact) {
+        return res.status(404).json({
+          status: "error",
+          message: "Contact not found",
+        });
+    }
     res.json({
         status: "success",
         message: "contact updated successfully",
+        contact
       });
 })
 

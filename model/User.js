@@ -19,9 +19,9 @@ const UserSchema = new Schema({
         type: mongoose.Schema.ObjectId,
         ref: "Contacts"
     }],
-    reminders: [{
+    tasks: [{
         type: mongoose.Schema.ObjectId,
-        ref: "Reminders"
+        ref: "Tasks"
     }],
     isAdmin: [{
         type: Boolean, 
