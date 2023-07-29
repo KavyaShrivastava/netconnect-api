@@ -6,6 +6,7 @@ import { globalErrorHandler, notFoundHandler } from '../middlewares/globalErrorH
 import contactsRouter from '../routes/contactsRoute.js';
 import tasksRoute from '../routes/tasksRoute.js';
 import cors from "cors";
+import verifyTokenRoute from '../routes/verifyTokenRoute.js';
 dotenv.config()
 
 dbConnect();
@@ -19,6 +20,7 @@ app.use(express.json())
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1/contact', contactsRouter)
 app.use('/api/v1/tasks', tasksRoute)
+app.use('/api/v1/', verifyTokenRoute)
 
 //err middleware
 app.use(notFoundHandler)

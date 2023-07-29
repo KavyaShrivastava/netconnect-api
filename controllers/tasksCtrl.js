@@ -28,8 +28,7 @@ export const createTasksCtrl = asyncHandler(async(req, res)=> {
 export const getAllTasksCtrl = asyncHandler(async(req, res)=> {
     const tasks = await Tasks.find({user: req?.userAuthId})
     if(tasks.length == 0){
-        return res.status(404).json({
-            success: false,
+        return res.json({
             message: "No tasks found for the user",
             tasks: [],
           });
@@ -39,4 +38,14 @@ export const getAllTasksCtrl = asyncHandler(async(req, res)=> {
         message: "Tasks for the user",
         tasks,
     });
+})
+
+export const getTaskWithParticularContact = asyncHandler(async(req, res)=> {
+
+        const contactId = req?.params?.contact
+        const tasks = await Tasks.find({contact : contactId})
+        res.status(200).json({ 
+            success: true,
+            tasks });
+
 })

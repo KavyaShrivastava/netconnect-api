@@ -28,7 +28,7 @@ export const createNewContactCtrl = asyncHandler(async(req, res)=> {
 })
 
 export const getAllContactsCtrl = asyncHandler(async(req, res)=>{
-    const contacts = await Contacts.find({user: req?.userAuthId}).populate("user");
+    const contacts = await Contacts.find({user: req?.userAuthId})
     res.json({
         success: true,
         message: "All contacts",
@@ -99,5 +99,6 @@ export const deleteContactCtrl = asyncHandler(async (req, res) => {
         updatedUser
     });
 });
+
       
 
