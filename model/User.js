@@ -15,10 +15,6 @@ const UserSchema = new Schema({
         type: String, 
         required: true
     },
-    contacts: [{
-        type: mongoose.Schema.ObjectId,
-        ref: "Contacts"
-    }],
     tasks: [{
         type: mongoose.Schema.ObjectId,
         ref: "Tasks"
