@@ -6,8 +6,6 @@ import Tasks from "../model/Tasks.js";
 export const createTasksCtrl = asyncHandler(async(req, res)=> {
    const {contact, reminderDateTime, message} = req.body;
    const user = await User.findById(req?.userAuthId);
-
-
    const task = await Tasks.create({
     user: user._id,
     contact, 
@@ -48,4 +46,51 @@ export const getTaskWithParticularContact = asyncHandler(async(req, res)=> {
             success: true,
             tasks });
 
+})
+
+export const updateTaskCtrl = asyncHandler(async(req, res)=> {
+    const {reminderDateTime, message, isCompleted} = req.body;
+
+    const task = await Tasks.findByIdAndUpdate(
+        req.params.id,
+        {
+            reminderDateTime, message, isCompleted
+
+        },
+        {
+            new: true,
+        },
+    )
+    
+    const updateTask = JSON.parse(JSON.stringify(task)); // Convert the task to a plain JavaScript object
+
+    if (!task) {
+        return res.status(404).json({
+          status: "error",
+          message: "Task not found",
+        });
+    }
+    res.json({
+        status: "success",
+        message: "task updated successfully",
+        task: updateTask
+      });
+
+
+})
+
+export const deleteMultipleTasksCtrl = asyncHandler(async(req, res)=> {
+    const {taskIds} = req?.body;
+    const deletionResult = await Tasks.deleteMany({ _id: { $in: taskIds } });
+    if (deletionResult.deletedCount > 0) {
+        return res.json({
+          success: true,
+          message: `${deletionResult.deletedCount} tasks deleted successfully.`,
+        })
+      } else {
+        return res.json({
+          success: false,
+          message: "No tasks were found with the provided IDs.",
+        })
+      }
 })

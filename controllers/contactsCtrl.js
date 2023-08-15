@@ -17,8 +17,6 @@ export const createNewContactCtrl = asyncHandler(async(req, res)=> {
         phone: phone??"",
         occupation: occupation??""
     })
-    user.contacts.push(contact?._id);
-    await user.save();
 
     res.status(201).json({
         status: 'success',
