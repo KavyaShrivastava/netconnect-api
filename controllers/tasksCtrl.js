@@ -80,8 +80,8 @@ export const updateTaskCtrl = asyncHandler(async(req, res)=> {
 })
 
 export const deleteMultipleTasksCtrl = asyncHandler(async(req, res)=> {
-    const {taskIds} = req?.body;
-    const deletionResult = await Tasks.deleteMany({ _id: { $in: taskIds } });
+    const {taskId} = req?.body;
+    const deletionResult = await Tasks.deleteMany({ _id: { $in: taskId } });
     if (deletionResult.deletedCount > 0) {
         return res.json({
           success: true,
